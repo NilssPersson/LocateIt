@@ -10,7 +10,7 @@ This is a quiz game made with inspiration from the Swedish television show "På 
 The startscreen for players. \
 ![Image 1 alt text](./screenshots/ChooseNameAvatar.png)
 How the screen looks when you start typing the name, allowing you to choose an avatar. \
-![Image 1 alt text](./screenshots/PlaceMarker.png) 
+ \ ![Image 1 alt text](./screenshots/PlaceMarker.png) 
 How it looks when the game is ongoing and you're asked to placed the marker. \
 ![Image 1 alt text](./screenshots/WaitingForQuestion.png)
 How it looks when the game is ongoing and you have placed the marker and is waiting for the answer. \
