@@ -1,0 +1,98 @@
+POST https://locateit-81c51-default-rtdb.europe-west1.firebasedatabase.app/teams.json
+content-type: application/json
+
+{
+    "name" : "Lag1",
+    "score" : 0
+}
+###
+POST http://localhost:5555/addTeam
+content-type: application/json
+
+{
+    "name" : "Lag2",
+    "score" : 1
+}
+###
+POST http://localhost:5555/addTeam
+content-type: application/json
+
+{
+    "name" : "Lag3",
+    "score" : 2
+}
+###
+POST http://localhost:5555/addTeam
+content-type: application/json
+
+{
+    "name" : "Lag4",
+    "score" : 3
+}
+###
+GET http://localhost:5555/getTeams
+
+###
+POST http://localhost:5555/getOneTeam
+content-type: application/json
+
+{
+    "name" : "Lag:t"
+}
+
+###
+
+POST http://localhost:5555/getGameStatus
+content-type: application/json
+
+{
+    "teamName" : "Spade"
+}
+
+###
+POST http://localhost:5555/setNextRound
+content-type: application/json
+
+###
+POST http://localhost:5555/addTeamAnswer
+content-type: application/json
+
+{
+    "teamName" : "Lag1",
+    "answerLong":1,
+    "answerLat":1,
+    "hasAnswered":true
+}
+###
+POST http://localhost:5555/addTeamAnswer
+content-type: application/json
+
+{
+    "teamName" : "Lag2",
+    "answerLong":10,
+    "answerLat":10,
+    "hasAnswered":true
+}
+###
+POST http://localhost:5555/addTeamAnswer
+content-type: application/json
+
+{
+    "teamName" : "Lag3",
+    "answerLong":13,
+    "answerLat":13,
+    "hasAnswered":true
+}
+###
+POST http://localhost:5555/addTeamAnswer
+content-type: application/json
+
+{
+    "teamName" : "Lag4",
+    "answerLong":7,
+    "answerLat":7,
+    "hasAnswered":true
+}
+###
+GET http://localhost:5555/getQuestionNumber
+content-type: application/json
