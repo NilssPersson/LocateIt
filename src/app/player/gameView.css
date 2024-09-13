@@ -5,4 +5,11 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   overflow: hidden;
+  touch-action: manipulation;
+}
+
+button,
+.questionTitle,
+.marker {
+  touch-action: none;
 }

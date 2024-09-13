@@ -33,8 +33,7 @@ export default function AnswerView({
   useEffect(() => {
     setAnswerLong(questions[questionNumber].longitude);
     setAnswerLat(questions[questionNumber].latitude);
-  }),
-    [questionNumber];
+  }, [questionNumber]);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",

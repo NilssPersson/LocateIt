@@ -68,10 +68,12 @@ export default function GameView({ teamName }) {
             mapTypeControl: false,
             streetViewControl: false,
             zoomControl: false,
+            gestureHandling: "greedy",
             styles: costomMapStyle
           }}
         >
           <Box
+            className="questionTitle"
             sx={{
               position: "absolute",
               top: "20px",
@@ -98,6 +100,7 @@ export default function GameView({ teamName }) {
             </Typography>
           </Box>
           <Marker
+            className="marker"
             position={markerPosition}
             draggable={true}
             onDragEnd={(event) => {

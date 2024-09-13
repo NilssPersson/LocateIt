@@ -1,15 +1,15 @@
 export const questions = [
   {
-    title: "Eiffeltårnet",
-    description: "Pin på toppen av Eiffeltårnet",
+    title: "Eiffeltornet",
+    description: "Pin på toppen av Eiffeltornet",
     longitude: 2.294481,
     latitude: 48.85837
   },
   {
-    title: "Uppvärming",
-    description: "Krakow",
-    latitude: 50.06842520792305,
-    longitude: 19.947368657519846
+    title: "Pärlan",
+    description: "Hawaii - Pearl harbour",
+    latitude: 21.35267135273925,
+    longitude: -157.98013437870154
   },
   {
     title: "Allmän 1",
