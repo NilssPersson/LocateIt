@@ -9,6 +9,7 @@ import {
 import { questions } from "../components/questions";
 import { useState, useEffect, useCallback } from "react";
 import avatar from "animal-avatar-generator";
+import { BorderColor } from "@mui/icons-material";
 
 const containerStyle = {
   width: "100%",
@@ -70,8 +71,12 @@ export default function AnswerView({
 
           {sortedTeams.map((team, index) => {
             const avatarSVG = avatar(team.avatar, { size: 40 });
+            const svgWithBorder = avatarSVG.replace(
+              "<svg ",
+              `<svg style="border: 2px solid black; border-radius: 50%;" `
+            );
             const avatarDataURL = `data:image/svg+xml,${encodeURIComponent(
-              avatarSVG
+              svgWithBorder
             )}`;
 
             return (
@@ -81,6 +86,10 @@ export default function AnswerView({
                   icon={{
                     url: avatarDataURL,
                     scaledSize: new window.google.maps.Size(40, 40)
+                  }}
+                  sx={{
+                    BorderColor: "black",
+                    borderRadius: "50%"
                   }}
                 />
                 <OverlayView

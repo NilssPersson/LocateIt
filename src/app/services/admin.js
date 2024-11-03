@@ -1,4 +1,4 @@
-import { ref, get, set, update, child } from "firebase/database";
+import { ref, get, set, update, child, onValue, off } from "firebase/database";
 import { database } from "../firebase";
 
 export const getTeams = async () => {
@@ -10,6 +10,30 @@ export const getTeams = async () => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const subscribeToTeams = (callback) => {
+  const teamsRef = ref(database, "teams");
+
+  const unsubscribe = onValue(teamsRef, (snapshot) => {
+    const teamsData = snapshot.val();
+    callback(teamsData ? Object.values(teamsData) : []);
+  });
+
+  // Return cleanup function to unsubscribe
+  return () => off(teamsRef);
+};
+
+export const subscribeToQuestionNumber = (callback) => {
+  const questionNumberRef = ref(database, "game/questionNumber");
+
+  const unsubscribe = onValue(questionNumberRef, (snapshot) => {
+    const questionNumber = snapshot.val();
+    callback(questionNumber);
+  });
+
+  // Return cleanup function to unsubscribe
+  return () => off(questionNumberRef);
 };
 
 export const setNextRound = async (req, res) => {
@@ -82,7 +106,7 @@ export const updateTeamScore = async (teamName, newScore) => {
       return;
     }
     const currentScore = snapshot.val().score || 0;
-    await set(teamRef, { score: currentScore + newScore });
+    await update(teamRef, { score: currentScore + newScore });
     console.log("Score updated successfully");
   } catch (error) {
     console.error(error);

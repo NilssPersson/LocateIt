@@ -6,8 +6,9 @@ import {
   getTeams,
   getQuestionNumber,
   setNextRound,
-  increaseTeamScore,
-  updateTeamScore
+  updateTeamScore,
+  subscribeToTeams,
+  subscribeToQuestionNumber
 } from "../services/admin";
 import "./page.css";
 import ScoreView from "./scoreView";
@@ -27,6 +28,8 @@ export default function Admin() {
   const numberOfQuestions = questions.length;
 
   useEffect(() => {
+    console.log(questions[0]);
+    console.log(questionNumber);
     setAnswerLong(questions[questionNumber].longitude);
     setAnswerLat(questions[questionNumber].latitude);
   }, [questionNumber]);
@@ -36,39 +39,36 @@ export default function Admin() {
       await updateTeamScore(team.name, team.score);
       console.log(`Increased score for ${team.name} by ${team.score}`);
     }
-    /*
-    let teamWithHighestScore = null;
-    if (calculatedScores && calculatedScores.length > 0) {
-      teamWithHighestScore = calculatedScores.reduce((highest, team) => {
-        return highest.score > team.score ? highest : team;
-      });
-    }
-    if (teamWithHighestScore && teamWithHighestScore.score !== 0) {
-      await increaseTeamScore(teamWithHighestScore.name);
-    }*/
   }
 
   useEffect(() => {
-    const fetchTeams = async () => {
-      if (view === "finish" || view === "answer") return;
-      const data = await getTeams();
-      if (data?.teams) {
-        const teamsArray = Object.values(data.teams); // Convert the teams object to an array
-        setTeams(teamsArray);
-      }
-      const questionNumber = await getQuestionNumber();
-      if (questionNumber === 0) {
-        setView("start");
-      }
-      if (questionNumber === numberOfQuestions) {
-        setView("finish");
-        return;
-      }
-      setQuestionNumber(questionNumber);
+    if (view === "finish" || view === "answer") return;
+
+    const handleTeamsUpdate = (teamsArray) => {
+      setTeams(teamsArray);
     };
-    fetchTeams();
-    const intervalId = setInterval(fetchTeams, 5000);
-    return () => clearInterval(intervalId);
+
+    const handleQuestionNumberUpdate = (newQuestionNumber) => {
+      if (newQuestionNumber === 0) {
+        setView("start");
+      } else if (newQuestionNumber === numberOfQuestions) {
+        setView("finish");
+      } else {
+        setQuestionNumber(newQuestionNumber);
+      }
+    };
+
+    // Set up real-time listeners and capture cleanup functions
+    const cleanupTeams = subscribeToTeams(handleTeamsUpdate);
+    const cleanupQuestionNumber = subscribeToQuestionNumber(
+      handleQuestionNumberUpdate
+    );
+
+    // Cleanup listeners on unmount
+    return () => {
+      cleanupTeams();
+      cleanupQuestionNumber();
+    };
   }, [numberOfQuestions, view]);
 
   const sortedTeams = [...teams].sort((a, b) => b.score - a.score); // Sort the teams by score in descending order
