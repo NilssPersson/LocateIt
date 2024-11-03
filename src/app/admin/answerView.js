@@ -3,22 +3,17 @@ import {
   GoogleMap,
   Marker,
   useJsApiLoader,
-  InfoWindow,
-  Polyline
+  Polyline,
+  OverlayView
 } from "@react-google-maps/api";
 import { questions } from "../components/questions";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import avatar from "animal-avatar-generator";
 
 const containerStyle = {
   width: "100%",
   height: "100%",
   zIndex: 1
-};
-
-const center = {
-  lat: 50,
-  lng: 20
 };
 
 export default function AnswerView({
@@ -29,6 +24,7 @@ export default function AnswerView({
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
   const [answerLong, setAnswerLong] = useState(0);
   const [answerLat, setAnswerLat] = useState(0);
+  const [map, setMap] = useState(null);
 
   useEffect(() => {
     setAnswerLong(questions[questionNumber].longitude);
@@ -40,13 +36,29 @@ export default function AnswerView({
     googleMapsApiKey: apiKey
   });
 
+  const onLoad = useCallback(
+    (mapInstance) => {
+      setMap(mapInstance);
+      const bounds = new window.google.maps.LatLngBounds();
+
+      // Extend bounds with each team position and the answer position
+      sortedTeams.forEach((team) => {
+        bounds.extend({ lat: team.answerLat, lng: team.answerLong });
+      });
+      bounds.extend({ lat: answerLat, lng: answerLong });
+
+      // Fit map to bounds
+      mapInstance.fitBounds(bounds);
+    },
+    [sortedTeams, answerLat, answerLong]
+  );
+
   return (
     isLoaded && (
       <Box sx={{ height: "75vh", width: "85vw", marginTop: "60px" }}>
         <GoogleMap
           mapContainerStyle={containerStyle}
-          center={center}
-          zoom={3}
+          onLoad={onLoad}
           options={{
             disableDefaultUI: true,
             mapTypeControl: false,
@@ -55,38 +67,53 @@ export default function AnswerView({
           }}
         >
           <Marker position={{ lat: answerLat, lng: answerLong }} />
+
           {sortedTeams.map((team, index) => {
             const avatarSVG = avatar(team.avatar, { size: 40 });
             const avatarDataURL = `data:image/svg+xml,${encodeURIComponent(
               avatarSVG
             )}`;
+
             return (
-              <>
+              <div key={index}>
                 <Marker
-                  key={index}
                   position={{ lat: team.answerLat, lng: team.answerLong }}
                   icon={{
                     url: avatarDataURL,
                     scaledSize: new window.google.maps.Size(40, 40)
                   }}
                 />
-                <InfoWindow
+                <OverlayView
                   position={{ lat: team.answerLat, lng: team.answerLong }}
-                  options={{
-                    pixelOffset: new window.google.maps.Size(0, -30)
-                  }}
-                  onCloseClick={() => {}}
+                  mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
                 >
-                  <Box sx={{ margin: "1px" }}>
+                  <Box
+                    sx={{
+                      backgroundColor: "white",
+                      width: "fit-content",
+                      padding: "5px",
+                      borderRadius: "4px",
+                      display: "flex",
+                      alignItems: "center",
+                      boxShadow: "0 2px 6px rgba(0, 0, 0, 0.3)",
+                      marginTop: "-38px",
+                      transform: "translate(-50%, -100%)" // Center above marker
+                    }}
+                  >
+                    <Typography
+                      sx={{ fontSize: "0.85rem", marginRight: "4px" }}
+                    >
+                      {team.name}:
+                    </Typography>
                     <Typography sx={{ fontSize: "0.85rem" }}>
-                      {team.name}:{" "}
                       {
                         calculatedScores.find((item) => item.name === team.name)
                           ?.score
                       }
                     </Typography>
                   </Box>
-                </InfoWindow>
+                </OverlayView>
+
                 <Polyline
                   path={[
                     { lat: answerLat, lng: answerLong },
@@ -94,7 +121,7 @@ export default function AnswerView({
                   ]}
                   options={{ strokeColor: "#069E2D" }}
                 />
-              </>
+              </div>
             );
           })}
         </GoogleMap>
