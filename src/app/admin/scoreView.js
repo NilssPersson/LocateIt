@@ -2,6 +2,8 @@ import { Box, Card, CardContent, Typography } from "@mui/material";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import HexagonIcon from "@mui/icons-material/Hexagon";
 import DisplayAvatar from "../components/displayAvatar";
+import { useEffect, useState } from "react";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 export default function ScoreView({
   sortedTeams,
@@ -10,11 +12,23 @@ export default function ScoreView({
   colorCount,
   questionNumber,
   numberOfQuestions,
-  bonusPoints
+  bonusPoints,
+  timer,
+  setTimer,
+  timerActive
 }) {
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (timer > 0) {
+        setTimer(timer - 1);
+      }
+    }, 500);
+    return () => clearInterval(interval);
+  }, [timer, setTimer]);
+
   return (
     <>
-      <Box marginBottom={"120px"}>
+      <Box marginBottom={"20px"}>
         <Card
           sx={{
             minWidth: 350,
@@ -42,6 +56,51 @@ export default function ScoreView({
           </CardContent>
         </Card>
       </Box>
+
+      {timerActive && (
+        <Box sx={{ height: 200, marginBottom: 0 }}>
+          <CountdownCircleTimer
+            isPlaying={timerActive}
+            duration={30}
+            colors={["#008000", "#F7B801", "#A30000"]}
+            colorsTime={[20, 14, 5]}
+            size={160}
+          >
+            {({ remainingTime }) => {
+              // Calculate bonus points based on the remaining time
+              // Starting from 150 points and decrementing based on remaining time
+              const newBonusPoints = Math.max(
+                0,
+                150 - (150 * (30 - remainingTime)) / 30
+              );
+
+              return (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: 0
+                  }}
+                >
+                  <Typography variant="h6" color="textPrimary">
+                    Bonuspoäng
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    color="textPrimary"
+                    sx={{ marginLeft: 1 }}
+                  >
+                    {newBonusPoints.toFixed(0)}
+                  </Typography>
+                </Box>
+              );
+            }}
+          </CountdownCircleTimer>
+        </Box>
+      )}
+
       {sortedTeams.map((team, index) => {
         let hexagonColor;
         if (team.score !== previousScore) {

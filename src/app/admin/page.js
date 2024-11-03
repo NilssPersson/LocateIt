@@ -171,6 +171,9 @@ export default function Admin() {
             questionNumber={questionNumber}
             numberOfQuestions={numberOfQuestions}
             bonusPoints={bonusPoints}
+            timer={timer}
+            setTimer={setTimer}
+            timerActive={timerActive}
           />
         );
       case "answer":
