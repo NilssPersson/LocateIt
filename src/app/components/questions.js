@@ -1,104 +1,104 @@
 export const questions = [
   {
-    title: "Eiffeltornet",
-    description: "Pin på toppen av Eiffeltornet",
-    longitude: 2.294481,
-    latitude: 48.85837
+    title: "Test-Kan ni Alnö?",
+    description: "Tänkt att vara alnö",
+    latitude: 62.423264,
+    longitude: 17.430802
   },
   {
-    title: "Pärlan",
-    description: "Hawaii - Pearl harbour",
-    latitude: 21.35267135273925,
-    longitude: -157.98013437870154
+    title: "A1",
+    description: "Cheopspyramiden",
+    latitude: 29.97916,
+    longitude: 31.134263
   },
   {
-    title: "Allmän 1",
-    description: "Pin på toppen av Kilimanjaro",
-    latitude: -3.067211226418216,
-    longitude: 37.355594658207885
+    title: "A2",
+    description: "Marianergraven - challengerdjupet",
+    latitude: 11.333333,
+    longitude: 142.2
   },
   {
-    title: "Allmän 2",
-    description: "Pin på horseshoe falls",
-    latitude: 43.07735480228458,
-    longitude: -79.07508306044495
+    title: "A3",
+    description: "Vatikanstaten-mitten av Petersplatsen",
+    latitude: 41.902232,
+    longitude: 12.457249
   },
   {
-    title: "Allmän 3",
-    description: "Pin på ngn fabrik",
-    latitude: 28.574446386486187,
-    longitude: -80.6520286130701
+    title: "A4",
+    description: "Cristo Redentor",
+    latitude: -22.951919296443155,
+    longitude: -43.210474549424895
   },
   {
-    title: "Allmän 4",
-    description: "Centralstation",
-    latitude: 40.405133814785096,
-    longitude: -3.6883214975963767
+    title: "A5",
+    description: "Singapore - University town",
+    latitude: 1.3055358305704188,
+    longitude: 103.77305833731971
   },
   {
-    title: "Allmän 5",
-    description: "C",
-    latitude: 31.78916272476405,
-    longitude: 35.20314185358063
+    title: "A6",
+    description: "Domkyrkan Uppsala - entren",
+    latitude: 59.858139329482235,
+    longitude: 17.632610176419735
   },
   {
-    title: "Allmän 6",
-    description: "På tjuren",
-    latitude: 40.70559101358184,
-    longitude: -74.01345099679396
+    title: "A7",
+    description: "Moskva-St Basil's Cathedral",
+    latitude: 55.75245612809559,
+    longitude: 37.62306029761218
   },
   {
-    title: "Allmän 7",
-    description: "Centralstation",
-    latitude: 39.005104783686484,
-    longitude: 125.73644252453879
+    title: "A8",
+    description: "Rhodos - Grabbarna Grus",
+    latitude: 36.45133832644421,
+    longitude: 28.216845086275764
   },
   {
-    title: "Allmän 8",
-    description: "Centralstation",
-    latitude: 60.14999271599812,
-    longitude: 15.182707855911879
+    title: "G1",
+    description: "Las Vegas -Sphere",
+    latitude: 36.12129909044011,
+    longitude: -115.16204459089832
   },
   {
-    title: "Bildfråga 1",
-    description: "Den lilla havsjungfrun",
-    latitude: 55.692865257940674,
-    longitude: 12.599290990311935
+    title: "Tokyo",
+    description: "Tokyo - Central station",
+    latitude: 35.681161566157684,
+    longitude: 139.76770614246482
   },
   {
-    title: "Bildfråga 2",
-    description: "Machu picchu",
-    latitude: -13.163141198350528,
-    longitude: -72.54527120389619
+    title: "hej",
+    description: "heja",
+    latitude: 21.41772201037708,
+    longitude: 39.78930404941875
   },
   {
-    title: "Bildfråga 3",
-    description: "Hawaii - Pearl harbour",
-    latitude: 21.35267135273925,
-    longitude: -157.98013437870154
+    title: "hej",
+    description: "heja",
+    latitude: 39.90227444670992,
+    longitude: 116.42108847835594
   },
   {
-    title: "Bildfråga 4",
-    description: "Vimmerby",
-    latitude: 57.66342583623851,
-    longitude: 15.858376819287978
+    title: "hej",
+    description: "heja",
+    latitude: -41.279244801296045,
+    longitude: 174.78016582836065
   },
   {
-    title: "Bildfråga 5",
-    description: "Storsjöodjuret - Östersund - Jamtli",
-    latitude: 63.187090050872314,
-    longitude: 14.636659082450006
+    title: "hej",
+    description: "heja",
+    latitude: 23.12676778965244,
+    longitude: -82.3543428487384
   },
   {
-    title: "Bildfråga 6",
-    description: "Wien - Centralstation",
-    latitude: 48.185348014521146,
-    longitude: 16.37702881629118
+    title: "hej",
+    description: "heja",
+    latitude: 37.99231404345734,
+    longitude: 23.720804521494852
   },
   {
-    title: "Bildfråga 7",
-    description: "Palermo - Centralstation",
-    latitude: 38.11012328237761,
-    longitude: 13.367040315701061
+    title: "hej",
+    description: "heja",
+    latitude: 52.37835704672222,
+    longitude: 4.900090609837917
   }
 ];

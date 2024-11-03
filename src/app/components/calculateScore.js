@@ -28,8 +28,8 @@ export function calculateScore(coords1, coords2, hardGuess = false) {
   // Then calculate the score using an exponential function,
   // returning a value between 0 and 5000
   if (hardGuess) {
-    return Math.floor(5000 * Math.exp(-d / 2000));
+    return Math.floor(1000 * Math.exp(-d / 2000));
   } else {
-    return Math.floor(5000 * Math.exp(-d / 1000));
+    return Math.floor(1000 * Math.exp(-d / 1000));
   }
 }

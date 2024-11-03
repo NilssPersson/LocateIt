@@ -6,7 +6,8 @@ import {
   getTeams,
   getQuestionNumber,
   setNextRound,
-  increaseTeamScore
+  increaseTeamScore,
+  updateTeamScore
 } from "../services/admin";
 import "./page.css";
 import ScoreView from "./scoreView";
@@ -28,10 +29,14 @@ export default function Admin() {
   useEffect(() => {
     setAnswerLong(questions[questionNumber].longitude);
     setAnswerLat(questions[questionNumber].latitude);
-  }),
-    [questionNumber];
+  }, [questionNumber]);
 
   async function updateHighestScore() {
+    for (let team of calculatedScores) {
+      await updateTeamScore(team.name, team.score);
+      console.log(`Increased score for ${team.name} by ${team.score}`);
+    }
+    /*
     let teamWithHighestScore = null;
     if (calculatedScores && calculatedScores.length > 0) {
       teamWithHighestScore = calculatedScores.reduce((highest, team) => {
@@ -40,7 +45,7 @@ export default function Admin() {
     }
     if (teamWithHighestScore && teamWithHighestScore.score !== 0) {
       await increaseTeamScore(teamWithHighestScore.name);
-    }
+    }*/
   }
 
   useEffect(() => {
@@ -64,7 +69,7 @@ export default function Admin() {
     fetchTeams();
     const intervalId = setInterval(fetchTeams, 5000);
     return () => clearInterval(intervalId);
-  }, [numberOfQuestions]);
+  }, [numberOfQuestions, view]);
 
   const sortedTeams = [...teams].sort((a, b) => b.score - a.score); // Sort the teams by score in descending order
 

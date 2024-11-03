@@ -72,3 +72,19 @@ export const increaseTeamScore = async (teamName) => {
     console.error(error);
   }
 };
+
+export const updateTeamScore = async (teamName, newScore) => {
+  try {
+    const teamRef = ref(database, `teams/${teamName}`);
+    const snapshot = await get(teamRef);
+    if (!snapshot.exists()) {
+      console.error("Team not found");
+      return;
+    }
+    const currentScore = snapshot.val().score || 0;
+    await set(teamRef, { score: currentScore + newScore });
+    console.log("Score updated successfully");
+  } catch (error) {
+    console.error(error);
+  }
+};
