@@ -20,11 +20,14 @@ export const addTeam = async (teamName, avatar) => {
 
 export const addTeamAnswer = async (teamName, answer) => {
   try {
+    console.log("?");
     const teamRef = ref(database, `teams/${teamName}`);
+
     await update(teamRef, {
       answerLat: answer.lat,
       answerLong: answer.lng,
-      hasAnswered: true
+      hasAnswered: true,
+      timeAnswered: Date.now()
     });
   } catch (error) {
     console.error(error);

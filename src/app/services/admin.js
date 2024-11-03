@@ -49,7 +49,8 @@ export const setNextRound = async (req, res) => {
 
     // Increase questionNumber by 1
     await update(gameRef, {
-      questionNumber: gameSnap.val().questionNumber + 1
+      questionNumber: gameSnap.val().questionNumber + 1,
+      questionTime: Date.now()
     });
 
     // Set hasAnswered to false and nullify answer for all teams
@@ -60,7 +61,8 @@ export const setNextRound = async (req, res) => {
         update(child(teamsRef, teamSnap.key), {
           hasAnswered: false,
           answerLong: 0,
-          answerLat: 0
+          answerLat: 0,
+          timeAnswered: null
         })
       );
     });

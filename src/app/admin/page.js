@@ -26,6 +26,10 @@ export default function Admin() {
   const [answerLong, setAnswerLong] = useState(0);
   const [answerLat, setAnswerLat] = useState(0);
   const numberOfQuestions = questions.length;
+  const [firstAnswerTime, setFirstAnswerTime] = useState(null);
+  const [timerActive, setTimerActive] = useState(false);
+  const [timer, setTimer] = useState(30);
+  const [bonusPoints, setBonusPoints] = useState({});
 
   useEffect(() => {
     console.log(questions[0]);
@@ -46,6 +50,34 @@ export default function Admin() {
 
     const handleTeamsUpdate = (teamsArray) => {
       setTeams(teamsArray);
+
+      const currentTime = Date.now();
+      for (let team of teamsArray) {
+        if (team.hasAnswered) {
+          if (!bonusPoints[team.name]) {
+            // Check if the team is the first to answer
+            if (firstAnswerTime === null) {
+              setFirstAnswerTime(currentTime);
+              setBonusPoints((prev) => ({ ...prev, [team.name]: 200 })); // 200 points for the first team
+              setTimerActive(true);
+            } else {
+              // Calculate elapsed time since the first answer
+              const elapsedTime = currentTime - firstAnswerTime;
+              if (elapsedTime <= 30000) {
+                // No points after 30 seconds
+                const bonus = Math.max(
+                  0,
+                  150 - Math.floor((elapsedTime / 30000) * 150)
+                );
+                setBonusPoints((prev) => ({
+                  ...prev,
+                  [team.name]: (prev[team.name] || 0) + bonus
+                }));
+              }
+            }
+          }
+        }
+      }
     };
 
     const handleQuestionNumberUpdate = (newQuestionNumber) => {
@@ -58,18 +90,16 @@ export default function Admin() {
       }
     };
 
-    // Set up real-time listeners and capture cleanup functions
     const cleanupTeams = subscribeToTeams(handleTeamsUpdate);
     const cleanupQuestionNumber = subscribeToQuestionNumber(
       handleQuestionNumberUpdate
     );
 
-    // Cleanup listeners on unmount
     return () => {
       cleanupTeams();
       cleanupQuestionNumber();
     };
-  }, [numberOfQuestions, view]);
+  }, [numberOfQuestions, view, firstAnswerTime, bonusPoints]); // Removed bonusPoints from dependencies
 
   const sortedTeams = [...teams].sort((a, b) => b.score - a.score); // Sort the teams by score in descending order
 
@@ -104,7 +134,11 @@ export default function Admin() {
       return;
     }
     setCalculatedScores([]);
+    setFirstAnswerTime(null);
+    setTimerActive(false);
+    setTimer(30);
     setQuestionNumber(questionNumber);
+    setBonusPoints({});
   };
 
   const handleStartView = async () => {
@@ -136,6 +170,7 @@ export default function Admin() {
             colorCount={colorCount}
             questionNumber={questionNumber}
             numberOfQuestions={numberOfQuestions}
+            bonusPoints={bonusPoints}
           />
         );
       case "answer":

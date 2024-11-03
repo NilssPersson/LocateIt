@@ -9,7 +9,8 @@ export default function ScoreView({
   currentColor,
   colorCount,
   questionNumber,
-  numberOfQuestions
+  numberOfQuestions,
+  bonusPoints
 }) {
   return (
     <>
@@ -89,6 +90,11 @@ export default function ScoreView({
                       {team.name}
                     </Typography>
                     <Typography variant="h6">Poäng: {team.score}</Typography>
+                    {bonusPoints[team.name] > 0 && (
+                      <Typography variant="h6">
+                        Bonuspoäng: {bonusPoints[team.name]}
+                      </Typography>
+                    )}
                   </Box>
                 </Box>
                 <Box
