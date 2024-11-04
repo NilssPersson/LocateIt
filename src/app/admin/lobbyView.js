@@ -32,7 +32,7 @@ export default function LobbyView({ teams }) {
               margin: 2,
               borderRadius: 3,
               filter: "drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.2))",
-              backgroundColor: team.hasAnswered ? "#a7c957" : "#F4F3F2"
+              backgroundColor: "#F4F3F2"
             }}
           >
             <CardContent>

@@ -40,7 +40,8 @@ export default function Admin() {
 
   async function updateHighestScore() {
     for (let team of calculatedScores) {
-      await updateTeamScore(team.name, team.score);
+      const bonus = bonusPoints[team.name] || 0;
+      await updateTeamScore(team.name, team.score + bonus);
       console.log(`Increased score for ${team.name} by ${team.score}`);
     }
   }
@@ -81,12 +82,13 @@ export default function Admin() {
     };
 
     const handleQuestionNumberUpdate = (newQuestionNumber) => {
-      if (newQuestionNumber === 0) {
-        setView("start");
-      } else if (newQuestionNumber === numberOfQuestions) {
+      if (newQuestionNumber === numberOfQuestions) {
         setView("finish");
-      } else {
+      } else if (newQuestionNumber > 0) {
         setQuestionNumber(newQuestionNumber);
+        setView("score");
+      } else {
+        setView("start");
       }
     };
 
@@ -99,7 +101,7 @@ export default function Admin() {
       cleanupTeams();
       cleanupQuestionNumber();
     };
-  }, [numberOfQuestions, view, firstAnswerTime, bonusPoints]); // Removed bonusPoints from dependencies
+  }, [numberOfQuestions, view, firstAnswerTime, bonusPoints]);
 
   const sortedTeams = [...teams].sort((a, b) => b.score - a.score); // Sort the teams by score in descending order
 
@@ -126,7 +128,7 @@ export default function Admin() {
     const questionNumber = await getQuestionNumber();
     const data = await getTeams();
     if (data?.teams) {
-      const teamsArray = Object.values(data.teams); // Convert the teams object to an array
+      const teamsArray = Object.values(data.teams);
       setTeams(teamsArray);
     }
     if (questionNumber === numberOfQuestions) {
@@ -143,7 +145,6 @@ export default function Admin() {
 
   const handleStartView = async () => {
     setView("score");
-    setQuestionNumber(1);
     await setNextRound();
   };
 
@@ -207,15 +208,19 @@ export default function Admin() {
           variant="contained"
           onClick={() => handleButtonClick()}
           sx={{
-            width: "500px", // Set to the width of the cards
-            height: "100px", // Set to the height of the cards
+            width: "500px",
+            height: "100px",
             borderRadius: "12px",
             marginTop: 8,
             marginBottom: 6
           }}
         >
           <Typography variant="h4">
-            {view === "score"
+            {questionNumber === 0
+              ? "Starta spel"
+              : questionNumber === numberOfQuestions - 1 && view === "answer"
+              ? "Resultat"
+              : view === "score"
               ? "Visa svar"
               : view === "start"
               ? "Starta spel"

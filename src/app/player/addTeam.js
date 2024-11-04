@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography, Collapse } from "@mui/material";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { addTeam, getOneTeam } from "../services/player.js";
@@ -6,7 +6,7 @@ import "./addTeam.css";
 import { Globe } from "../components/Globe.js";
 import SelectAvatar from "../components/selectAvatar.js";
 
-export default function AddTeam({ teamName, setTeamName }) {
+export default function AddTeam({ setTeamName }) {
   const [inputName, setInputName] = useState("");
   const [avatarString, setAvatarString] = useState(Math.random().toString());
 
@@ -44,14 +44,14 @@ export default function AddTeam({ teamName, setTeamName }) {
             width: "85%",
             display: "block",
             margin: "auto",
-            marginTop: "110px"
+            marginTop: "70px"
           }}
         />
       </Box>
       <Box
         sx={{
-          marginTop: inputName !== "" ? "20px" : "70px",
-          width: "65%",
+          marginTop: "100px",
+          width: "70%",
           backgroundColor: "#F4F3F2",
           p: 1.2,
           borderRadius: "8px"
@@ -64,12 +64,12 @@ export default function AddTeam({ teamName, setTeamName }) {
           onChange={(e) => setInputName(e.target.value)}
           sx={{ width: "100%" }}
         />
-        {inputName !== "" && (
+        <Collapse in={inputName !== ""} timeout={300}>
           <SelectAvatar
             avatarString={avatarString}
             setAvatarString={setAvatarString}
           />
-        )}
+        </Collapse>
         <Button
           onClick={() => newTeam()}
           variant="contained"

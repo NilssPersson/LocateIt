@@ -14,6 +14,7 @@ import { costomMapStyle } from "../components/mapStyle";
 import React, { useRef } from "react";
 import { Globe } from "../components/Globe";
 import { questions } from "../components/questions";
+import Img from "next/image";
 
 const theme = createTheme({
   palette: {
@@ -87,9 +88,11 @@ export default function GameView({ teamName }) {
             }}
           >
             <Typography variant="h6" sx={{ whiteSpace: "nowrap" }}>
-              <img
+              <Img
                 src="/markerIcon.png"
                 alt="markerIcon"
+                width={40}
+                height={40}
                 style={{
                   width: "40px",
                   height: "40px",
@@ -136,7 +139,7 @@ export default function GameView({ teamName }) {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          marginTop: "250px"
+          marginTop: "280px"
         }}
       >
         <Typography variant="h5">Väntar på nästa fråga...</Typography>

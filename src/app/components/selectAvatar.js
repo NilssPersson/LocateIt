@@ -24,7 +24,7 @@ export default function SelectAvatar({ avatarString, setAvatarString }) {
         gap: "3px"
       }}
     >
-      <Typography variant="h6">Avatar</Typography>
+      <Typography variant="h6">Välj maskot</Typography>
       <Box
         sx={{
           display: "flex",
